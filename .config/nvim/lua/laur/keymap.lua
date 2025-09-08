@@ -77,3 +77,8 @@ end, { desc = '[S]earch [/] in Open Files' })
 vim.keymap.set('n', '<leader>sn', function()
   builtin.find_files { cwd = vim.fn.stdpath 'config' }
 end, { desc = '[S]earch [N]eovim files' })
+
+local gitsigns = require 'gitsigns'
+vim.keymap.set('n', '<leader>tb', gitsigns.blame_line, { desc = 'Toggle current line blame' })
+vim.keymap.set('n', '<leader>tB', gitsigns.blame, { desc = 'Toggle current blame' })
+vim.keymap.set('n', '<leader>tw', gitsigns.toggle_word_diff, { desc = 'Toggle word diff' })
