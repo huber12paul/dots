@@ -1,41 +1,24 @@
 return {
   'ThePrimeagen/harpoon',
-  branch = 'harpoon2',
-  opts = {
-    menu = {
-      width = vim.api.nvim_win_get_width(0) - 4,
-    },
-    settings = {
-      save_on_toggle = true,
-    },
-  },
-  keys = function()
-    local keys = {
-      {
-        '<leader>H',
-        function()
-          require('harpoon'):list():add()
-        end,
-        desc = 'Add Harpoon File',
-      },
-      {
-        '<leader>h',
-        function()
-          local harpoon = require 'harpoon'
-          harpoon.ui:toggle_quick_menu(harpoon:list())
-        end,
-        desc = 'Harpoon Quick Menu',
-      },
-    }
+  event = 'VeryLazy',
+  config = function()
+    local mark = require 'harpoon.mark'
+    local ui = require 'harpoon.ui'
 
-    for i = 1, 9 do
-      table.insert(keys, {
-        '<leader>h' .. i,
-        function()
-          require('harpoon'):list():select(i)
-        end,
-      })
-    end
-    return keys
+    vim.keymap.set('n', '<leader>a', mark.add_file, { desc = 'Harpoon: Mark File' })
+    vim.keymap.set('n', '<C-e>', ui.toggle_quick_menu, { desc = 'Toggle Harpoon Menu' })
+
+    vim.keymap.set('n', '<C-t>', function()
+      ui.nav_file(1)
+    end, { desc = 'Harpoon File 1' })
+    vim.keymap.set('n', '<C-s>', function()
+      ui.nav_file(2)
+    end, { desc = 'Harpoon File 2' })
+    vim.keymap.set('n', '<C-b>', function()
+      ui.nav_file(3)
+    end, { desc = 'Harpoon File 3' })
+    vim.keymap.set('n', '<C-g>', function()
+      ui.nav_file(4)
+    end, { desc = 'Harpoon File 4' })
   end,
 }
