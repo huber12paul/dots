@@ -61,21 +61,23 @@ require("mason-tool-installer").setup({
 for server, config in pairs(lsp_servers) do
 	vim.lsp.config(server, {
 		settings = config,
+		on_attach = function(event)
+			local opts = { buffer = event.buf, silent = true }
+			local keymap = vim.keymap
 
-		-- only create the keymaps if the server attaches successfully
-		on_attach = function(args)
-			local bufnr = args.buf
-			local map = function(mode, lhs, rhs, desc)
-				vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
-			end
-
-			map("n", "K", vim.lsp.buf.hover, "LSP Hover")
-			map("n", "gd", vim.lsp.buf.definition, "Go to definition")
-			map("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
-			map("n", "gi", vim.lsp.buf.implementation, "Go to implementation")
-			map("n", "gr", vim.lsp.buf.references, "References")
-			map("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
-			map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "Code action")
+			keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts)
+			keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+			keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
+			keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
+			keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
+			keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
+			keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+			keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
+			keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
+			keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+			keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+			keymap.set("n", "K", vim.lsp.buf.hover, opts)
+			keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
 		end,
 	})
 end

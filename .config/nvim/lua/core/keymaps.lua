@@ -15,4 +15,18 @@ local function formatter()
 	require("conform").format({ async = true, lsp_format = "fallback" })
 end
 vim.keymap.set("n", "<leader>F", formatter, { desc = "[F]ormat buffer" })
-vim.keymap.set("n", "<leader>ch", "<cmd>ClangdSwitchSourceHeader<cr>", { desc = "Switch Source/Header (C/C++)" })
+
+-- Open Neovim config files
+vim.keymap.set("n", "<leader>en", function()
+	builtin.find_files({
+		cwd = vim.fn.stdpath("config"),
+	})
+end, { desc = "Open Neovim config files" })
+
+vim.keymap.set("n", "<leader>cd", function()
+	vim.chdir(vim.fn.getcwd())
+end, { desc = "Change to current DIR" })
+
+vim.keymap.set("n", "<leader>do", function()
+	require("mini.diff").toggle_overlay()
+end, { desc = "Toggle diff overlay" })

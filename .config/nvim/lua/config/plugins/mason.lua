@@ -12,19 +12,19 @@ mason.setup({
 	},
 })
 
--- mason_lspconfig.setup({
---   ensure_installed = {
---     "pyright",
---     "html",
---     "lua_ls",
---     "emmet_ls",
---     "clangd",
---   },
--- })
+mason_lspconfig.setup({
+	ensure_installed = {
+		"pyright",
+		"html",
+		"lua_ls",
+		"clangd",
+	},
+})
 
 mason_tool_installer.setup({
 	ensure_installed = {
 		"prettier",
 		"stylua",
+		"delve",
 	},
 })

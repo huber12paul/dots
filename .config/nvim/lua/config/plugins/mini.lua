@@ -14,8 +14,3 @@ require("mini.surround").setup()
 -- Setup mini.diff with proper function reference
 local diff = require("mini.diff")
 diff.setup()
-
--- Keymap using vim.keymap.set instead
-vim.keymap.set("n", "<leader>do", function()
-	require("mini.diff").toggle_overlay()
-end, { desc = "Toggle diff overlay" })
